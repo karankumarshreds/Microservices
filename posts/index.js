@@ -18,7 +18,7 @@ app.post('/posts', async (req, res) => {
     const id = randomBytes(4).toString('hex');
     const { title } = req.body;
     posts[id] = {
-        id, title
+        id, title 
     };
     //send the event to event bus as well
     await axios.post('http://localhost:4005/events', {
@@ -28,6 +28,13 @@ app.post('/posts', async (req, res) => {
         }
     });
     res.status(200).send(posts[id]);
+});
+
+//recieve events from event-bus
+app.post("/events", (req, res) => {
+    console.log('Recieved events ***********', 
+    req.body.type);
+    res.send({});
 });
 
 app.listen(4000, () => {
