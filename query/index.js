@@ -23,18 +23,29 @@ app.post('/events', (req, res) => {
             title: title,
             comments: []
         };
-    };
+    }; 
     if(type === 'CommentCreated') {
-        const {  id, content, postId } = req.body.data;
+        const {  id, content, postId, status } = data;
         // get the post of the associated comment
         // and push this comment(id) to it's list 
         const post = posts[`${postId}`];
-        post.comments.push({ id, content });
+        post.comments.push({ id, content, status });
     };
-    res.send({});
+    if(type === 'CommentUpdated') {
+        const { id, postId, status, content } = data;
+        // get post with postId 
+        const post = posts[`${postId}`];
+        // find comment which is updated
+        const comment = post.comments.find(each => {
+            return each.id === id;
+        });
+        // set it's status to incoming status 
+        comment.status = status;
+    };
+    res.send({}); 
 });
 
 app.listen(4002, () => {
-    console.log("listening on 4002");
+    console.log("query on 4002");
 });
 
