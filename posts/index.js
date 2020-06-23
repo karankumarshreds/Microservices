@@ -38,5 +38,6 @@ app.post("/events", (req, res) => {
 });
  
 app.listen(4000, () => {
+    console.log("new version")
     console.log("posts on 4000");
 });   
