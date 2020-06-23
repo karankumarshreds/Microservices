@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-srv
+spec:
+  type: NodePort #to expose cluster
+  selector:
+    app: posts #pod label
+  ports:
+    - name: posts
+      protocol: TCP
+      #browser --> this service(4000)
+      ## NOTE : You will access using 3XXXX port 
+      ## from browser which can be checked by 
+      ## >kubectl get servies< command   
+      port: 4000 
+      targetPort: 4000 #target pod port 
