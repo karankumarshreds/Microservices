@@ -14,4 +14,19 @@ spec:
         spec: 
             containers:
               - name: posts
-                image: karanshreds/posts:0.0.2
+                image: karanshreds/posts
+---
+apiVersion: v1 
+kind: Service 
+metadata: 
+    name: posts-clusterip-srv
+spec: 
+    selector: 
+        app: posts 
+    type: ClusterIP
+    ports: 
+        - name: posts
+          protocol: TCP 
+          port: 4000 
+          targetPort: 4000
+

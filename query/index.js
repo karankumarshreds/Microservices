@@ -54,7 +54,7 @@ app.listen(4002, async () => {
     console.log("query on 4002");
     // sync code in case this service goes down it will 
     // retrieve all the missed out posts 
-    const res = await axios.get('http://localhost:4005/events');
+    const res = await axios.get('http://event-bus-srv:4005/events');
     for(let event of res.data) {
         console.log('Processing events', event.type);
         handleEvent(event.type, event.data);

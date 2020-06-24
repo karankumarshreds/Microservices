@@ -1,3 +1,8 @@
+########################################
+## DO NOT USE NODEPORT FOR PRODUCTION ##
+##    USE LOADBALANCER INSTEAD!!      ##
+########################################
+
 apiVersion: v1
 kind: Service
 metadata:
