@@ -6,16 +6,35 @@ metadata:
     # routing rules mentioned in this file 
     annotations:
         kubernetes.io/ingress.class: nginx 
+        nginx.ingress.kubernetes.io/use-regex: 'true'
 spec: 
     # our custom routing rules
     rules: 
         - host: posts.com 
           http: 
             paths: 
-                # request with /posts will be routed 
+                # request with /posts/create will be routed 
                 # to the posts-clusterip-srv (service)
-                - path: /posts
+                - path: /posts/create
                   backend: 
                     serviceName: posts-clusterip-srv
                     servicePort: 4000
+                - path: /posts 
+                  backend: 
+                    serviceName: query-srv
+                    servicePort: 4002 
+                - path: /posts/?(.*)/comments
+                  backend:
+                    serviceName: comments-srv
+                    servicePort: 4001 
+                # use regex because we may use react-routers
+                # for the dynamic single page apps. Also make
+                # sure you place this path in the last 
+                - path: /?(.*) 
+                  backend: 
+                    serviceName: client-srv
+                    servicePort: 3000
+
+
+                    
 
